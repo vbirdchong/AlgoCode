@@ -2,7 +2,7 @@
 
 ## Function 1
 
-暴力搜索，进行循环查找，复杂度O(n^2)
+暴力搜索，进行循环查找，复杂度O($n^2$)
 
 ```
     public int[] twoSum2(int[] nums, int target) {
@@ -15,5 +15,27 @@
         }
 
         throw new IllegalArgumentException("Nothing");
+    }
+```
+
+## Function 2
+
+使用hash表，将数组中的值和下标进行key-value的mapping。第一次循环时进行map的创建，第二次循环则直接可以查找，将复杂度降到O(n)。
+
+```
+    public int[] twoSum3(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], i);
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            if (map.containsKey(complement) && map.get(complement) != i) {
+                return new int [] {i, map.get(complement)};
+            }
+        }
+
+        throw new IllegalArgumentException("No two sum solution");
     }
 ```
