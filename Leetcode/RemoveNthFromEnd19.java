@@ -41,9 +41,28 @@ public class RemoveNthFromEnd19 {
         }
         first.next = first.next.next; // skip the node which need to delete
         return dummy.next;
-
     }
     
+    public ListNode removeNthFromEnd2(ListNode head, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode first = dummy;
+        ListNode second = dummy;
+
+        for (int i = 1; i <= n+1; i++) {
+            first = first.next;
+        }
+
+        while (first != null) {
+            first = first.next;
+            second = second.next;
+        }
+
+        second.next = second.next.next;
+        return dummy.next;
+    }
+
     public static void main(String[] args) {
         ListNode head = new ListNode(0);
         ListNode current = head;
@@ -65,7 +84,7 @@ public class RemoveNthFromEnd19 {
         }
 
         RemoveNthFromEnd19 testObject = new RemoveNthFromEnd19();
-        ListNode ret = testObject.removeNthFromEnd(head, 2);
+        ListNode ret = testObject.removeNthFromEnd2(head, 3);
         while (ret != null ) {
             System.out.println(ret.val);
             ret = ret.next;

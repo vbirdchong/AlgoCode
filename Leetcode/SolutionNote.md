@@ -125,3 +125,31 @@ Try to do this in one pass.
         return dummy.next;
     }
 ```
+
+### Solution2
+设置两个指针，让第一个指针领先于第二个指针n的间隔，然后两个指针同时进行移动。当第一个指针到达null的时候，第二个指针正好位于要删除的节点的上一个位置，
+修改第二个指针的next节点，即可删除需要删除的节点。
+
+![原理](https://leetcode.com/media/original_images/19_Remove_nth_node_from_end_of_listB.png)
+
+```
+    public ListNode removeNthFromEnd2(ListNode head, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode first = dummy;
+        ListNode second = dummy;
+
+        for (int i = 1; i <= n+1; i++) {
+            first = first.next;
+        }
+
+        while (first != null) {
+            first = first.next;
+            second = second.next;
+        }
+
+        second.next = second.next.next;
+        return dummy.next;
+    }
+```
