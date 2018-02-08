@@ -44,3 +44,72 @@ def aplusb(self, a, b):
     return a
 
 ```
+
+## 114. 不同的路径
+
+有一个机器人的位于一个 m × n 个网格左上角。
+
+机器人每一时刻只能向下或者向右移动一步。机器人试图达到网格的右下角。
+
+问有多少条不同的路径？
+
+样例
+
+给出 m = 3 和 n = 3, 返回 6.
+
+给出 m = 4 和 n = 5, 返回 35.
+
+### Solution
+
+```
+属于动态规划问题，当前网格的路径数取决于到达它左侧网格和正上方网格的路径的和
+
+Java
+
+public int uniquePaths(int m , int n) {
+    if (m == 1 || n == 1) {
+        return 1;
+    }
+
+    int[][] cell = new int[m][n];
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i == 0 || j == 0) {
+                cell[i][j] = 1; 
+            } else {
+                cell[i][j] = cell[i - 1][j] + cell[i][j - 1];
+            }
+        }
+    }
+
+    return cell[m - 1][n - 1];
+}
+
+Python
+
+def uniquePaths(self, m, n):
+    if (m == 1 or n == 1):
+        return 1
+
+    # function 1
+    cell = [[0 for col in range(n)] for row in range(m)]
+    for i in range(0, m):
+        for j in range(0, n):
+            if (i == 0 or j == 0):
+                cell[i][j] = 1
+            else:
+                cell[i][j] = cell[i-1][j] + cell[i][j-1]
+    return cell[m-1][n-1]
+
+    # function 2
+    # using mapping 
+    # mp = {}
+    # for i in range(m):
+    #     for j in range(n):
+    #         if(i == 0 or j == 0):
+    #             mp[(i, j)] = 1
+    #         else:
+    #             mp[(i, j)] = mp[(i - 1, j)] + mp[(i, j - 1)]
+    # return mp[(m - 1, n - 1)]
+```
